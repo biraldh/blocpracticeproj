@@ -1,6 +1,11 @@
 import 'package:blocpracticeproj/Screen/pages/Signin.dart';
+import 'package:blocpracticeproj/Screen/pages/home.dart';
+import 'package:blocpracticeproj/Services/Auth_service.dart';
+import 'package:blocpracticeproj/bloc/signupbloc/signup_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Screen/pages/Signup_page.dart';
 
@@ -17,11 +22,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-
-      theme: ThemeData(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SignupBloc>(
+          create: (context) => SignupBloc(AuthService(FirebaseAuth.instance)),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        home: const SignupPage(),
+        routes: {
+          '/signup': (context) => const SignupPage(),
+          '/signin': (context) => const Signin(),
+          '/home' : (context) => const Home(),
+        },
       ),
-      home: const Signin(),
     );
   }
 }

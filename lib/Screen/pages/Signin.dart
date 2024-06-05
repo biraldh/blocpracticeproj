@@ -1,7 +1,9 @@
 import 'package:blocpracticeproj/Screen/pages/Signup_page.dart';
 import 'package:blocpracticeproj/Screen/widget/buttonloginsignin.dart';
+import 'package:blocpracticeproj/bloc/signupbloc/signup_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widget/inputfield.dart';
 
@@ -25,13 +27,18 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: BlocListener<SignupBloc, SignupState>(
+    listener: (context, state) {
+
+
+  },
+  child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text("Sign in", style: TextStyle(fontSize: 30),),
           Inputfield(hintxt: 'Email', controller: _emailcontrol,),
           Inputfield(hintxt: 'Passwrod', obsceuretxt: true, controller: _passwordcontrol,),
-          ElvButton(buttontext: 'Sign in'),
+          ElvButton(buttontext: 'Sign in' ,onPressed: (){},),
           GestureDetector(
             onTap: (){
               Navigator.push(context, SignupPage.route());
@@ -52,6 +59,7 @@ class _SigninState extends State<Signin> {
           )
         ],
       ),
+),
     );
   }
 }
