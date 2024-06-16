@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Inputfield extends StatelessWidget {
   final String hintxt;
@@ -17,6 +18,7 @@ class Inputfield extends StatelessWidget {
         decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: hintxt
+
         ),
       ),
     );

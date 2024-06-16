@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class AuthService {
   final FirebaseAuth _auth;
@@ -21,6 +22,20 @@ class AuthService {
       return e.message ?? 'An error occurred';
     } catch (e) {
       return 'An error occurred';
+    }
+  }
+  Future<Object> SigninWithEmailandPassword({
+    required String email,
+    required String password,
+  })async{
+    try {
+      UserCredential userinfo = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+      return userinfo;
+    } on FirebaseAuthException catch(e){
+      return e.code;
     }
   }
 }
