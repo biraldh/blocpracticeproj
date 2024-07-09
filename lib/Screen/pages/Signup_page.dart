@@ -5,11 +5,9 @@ import 'package:blocpracticeproj/Screen/widget/inputfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Services/Auth_service.dart';
 import '../../bloc/signupbloc/signup_bloc.dart';
 
 class SignupPage extends StatefulWidget {
-  final String errmessage = '';
   static route() => MaterialPageRoute(builder: (context)=> SignupPage());
   const SignupPage({super.key});
 

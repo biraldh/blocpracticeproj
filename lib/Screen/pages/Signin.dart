@@ -1,14 +1,17 @@
 import 'package:blocpracticeproj/Screen/pages/Signup_page.dart';
 import 'package:blocpracticeproj/Screen/widget/buttonloginsignin.dart';
-import 'package:blocpracticeproj/bloc/signupbloc/signup_bloc.dart';
+import 'package:blocpracticeproj/bloc/signinbloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Core/Error/Login and Signup error/Loginin.dart';
 import '../widget/inputfield.dart';
 
 class Signin extends StatefulWidget {
+
   static route() => MaterialPageRoute(builder: (context)=> Signin());
+
   const Signin({super.key});
 
   @override
@@ -16,6 +19,8 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  LoginError _signup_error = LoginError();
+  String errmessage = '';
   final TextEditingController _emailcontrol = TextEditingController();
   final TextEditingController _passwordcontrol = TextEditingController();
   @override
@@ -27,9 +32,15 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<SignupBloc, SignupState>(
+      body: BlocListener<SignInBloc, SignInState>(
     listener: (context, state) {
-
+      if(state is SignInSuccess){
+        Navigator.pushNamed(context, "/home");
+      }else if (state is SignInFail){
+        setState(() {
+          errmessage = _signup_error.LoginFaliure(state.Errmessage);
+        });
+      }
 
   },
   child: Column(
@@ -38,7 +49,21 @@ class _SigninState extends State<Signin> {
           const Text("Sign in", style: TextStyle(fontSize: 30),),
           Inputfield(hintxt: 'Email', controller: _emailcontrol,),
           Inputfield(hintxt: 'Passwrod', obsceuretxt: true, controller: _passwordcontrol,),
-          ElvButton(buttontext: 'Sign in' ,onPressed: (){},),
+          ElvButton(buttontext: 'Sign in' ,onPressed: (){
+            if (_emailcontrol.text.trim().isNotEmpty && _passwordcontrol.text.trim().isNotEmpty){
+              context.read<SignInBloc>().add(SignInUser(
+              email: _emailcontrol.text.trim(),
+              Password: _passwordcontrol.text.trim()
+              ));
+              setState(() {
+                errmessage = '';
+              });
+            }else{
+            setState(() {
+              errmessage = "fill the fields";
+            });
+          }
+          },),
           GestureDetector(
             onTap: (){
               Navigator.push(context, SignupPage.route());
@@ -56,7 +81,8 @@ class _SigninState extends State<Signin> {
                   )
                 ]
             )),
-          )
+          ),
+          Text(errmessage)
         ],
       ),
 ),
