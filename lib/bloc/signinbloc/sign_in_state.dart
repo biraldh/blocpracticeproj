@@ -6,8 +6,9 @@ sealed class SignInState {}
 final class SignInInitial extends SignInState {}
 
 class SignInSuccess extends SignInState{
-  final String uid;
-  SignInSuccess(this.uid);
+  final String? user;
+  final Token? token;
+  SignInSuccess(this.user, this.token);
 }
 class SignInFail extends SignInState{
   final String Errmessage;

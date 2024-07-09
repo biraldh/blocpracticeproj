@@ -40,7 +40,6 @@ class _SigninState extends State<Signin> {
         setState(() {
           errmessage = _signup_error.LoginFaliure(state.Errmessage);
         });
-
       }
 
   },

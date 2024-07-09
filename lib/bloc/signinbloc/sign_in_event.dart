@@ -8,7 +8,4 @@ class SignInUser extends SignInEvent{
   final String Password;
 
   SignInUser({required this.email, required this.Password});
-
-
-
 }
